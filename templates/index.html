@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Financial Research Portal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">&#9654; Research Portal</div>
+      <span class="tagline">Financial Statement Extractor</span>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <span class="alert-icon">{% if category == 'success' %}&#10003;{% else %}&#9888;{% endif %}</span>
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Upload Section -->
+    <section class="card upload-card">
+      <h2>Upload Financial Document</h2>
+      <p class="card-desc">
+        Upload a PDF annual report or financial statement. The system will extract
+        Income Statement line items and generate a structured Excel / CSV file.
+      </p>
+
+      <form action="/upload" method="POST" enctype="multipart/form-data" id="uploadForm">
+        <div class="drop-zone" id="dropZone">
+          <div class="drop-icon">&#128196;</div>
+          <p>Drag &amp; drop your PDF here, or</p>
+          <label for="pdf_file" class="btn btn-secondary">Browse File</label>
+          <input type="file" id="pdf_file" name="pdf_file" accept=".pdf" required hidden />
+          <p class="file-hint" id="fileHint">No file selected</p>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            <span id="btnText">Extract Financial Data</span>
+            <span id="btnLoader" class="loader" hidden></span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Results Section -->
+    {% if csv_file %}
+    <section class="card results-card">
+      <h2>&#10003; Extraction Complete</h2>
+
+      <div class="meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Currency Detected</span>
+          <span class="meta-value {% if currency == 'Unclear' %}unclear{% endif %}">{{ currency }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Units</span>
+          <span class="meta-value {% if units == 'Unclear' %}unclear{% endif %}">{{ units }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Years Found</span>
+          <span class="meta-value">{{ years | join(', ') if years else 'Unknown' }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Rows Extracted</span>
+          <span class="meta-value">{{ row_count }}</span>
+        </div>
+      </div>
+
+      <div class="download-buttons">
+        <a href="/download/{{ csv_file }}" class="btn btn-download">
+          &#11015; Download CSV
+        </a>
+        <a href="/download/{{ xlsx_file }}" class="btn btn-download btn-excel">
+          &#11015; Download Excel (.xlsx)
+        </a>
+      </div>
+
+      <p class="note">
+        &#9432; Review rows flagged as <strong>Low Confidence</strong> or <strong>Missing</strong> in the output file.
+        These indicate values the system could not reliably extract.
+      </p>
+    </section>
+    {% endif %}
+
+    <!-- How It Works -->
+    <section class="card info-card">
+      <h2>How It Works</h2>
+      <ol class="steps">
+        <li><strong>Upload</strong> a PDF annual report or financial statement.</li>
+        <li>The system <strong>extracts text</strong> and scans for Income Statement line items.</li>
+        <li>Numbers are <strong>parsed and validated</strong> — no hallucinated values.</li>
+        <li>Missing items are marked <code>NULL</code> with a <em>Missing</em> confidence flag.</li>
+        <li>Output is a clean <strong>CSV / Excel</strong> table ready for analysis.</li>
+      </ol>
+
+      <h3>Extracted Line Items</h3>
+      <div class="tag-list">
+        <span class="tag">Revenue</span>
+        <span class="tag">Cost of Goods Sold</span>
+        <span class="tag">Gross Profit</span>
+        <span class="tag">Operating Expenses</span>
+        <span class="tag">R&amp;D</span>
+        <span class="tag">Operating Income</span>
+        <span class="tag">Interest Expense</span>
+        <span class="tag">Profit Before Tax</span>
+        <span class="tag">Tax Expense</span>
+        <span class="tag">Net Income</span>
+        <span class="tag">D&amp;A</span>
+        <span class="tag">EBITDA</span>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Financial Research Portal &mdash; Internal Use Only</p>
+  </footer>
+
+  <script>
+    // Show filename on selection
+    const fileInput = document.getElementById('pdf_file');
+    const fileHint  = document.getElementById('fileHint');
+    const dropZone  = document.getElementById('dropZone');
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) {
+        fileHint.textContent = fileInput.files[0].name;
+        dropZone.classList.add('has-file');
+      }
+    });
+
+    // Drag and drop
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const dt = e.dataTransfer;
+      if (dt.files.length) {
+        fileInput.files = dt.files;
+        fileHint.textContent = dt.files[0].name;
+        dropZone.classList.add('has-file');
+      }
+    });
+
+    // Loading state on submit
+    document.getElementById('uploadForm').addEventListener('submit', () => {
+      const btn    = document.getElementById('submitBtn');
+      const text   = document.getElementById('btnText');
+      const loader = document.getElementById('btnLoader');
+      btn.disabled = true;
+      text.textContent = 'Processing…';
+      loader.hidden = false;
+    });
+  </script>
+
+</body>
+</html>

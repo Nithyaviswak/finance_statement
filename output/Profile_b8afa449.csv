@@ -1,0 +1,49 @@
+Line Item,Year,Value,Currency,Units,Confidence Flag
+Cost of Goods Sold,2015,NULL,Unclear,Unclear,Missing
+Cost of Goods Sold,2020,NULL,Unclear,Unclear,Missing
+Cost of Goods Sold,2022,NULL,Unclear,Unclear,Missing
+Cost of Goods Sold,2026,NULL,Unclear,Unclear,Missing
+Depreciation & Amortization,2015,NULL,Unclear,Unclear,Missing
+Depreciation & Amortization,2020,NULL,Unclear,Unclear,Missing
+Depreciation & Amortization,2022,NULL,Unclear,Unclear,Missing
+Depreciation & Amortization,2026,NULL,Unclear,Unclear,Missing
+EBITDA,2015,NULL,Unclear,Unclear,Missing
+EBITDA,2020,NULL,Unclear,Unclear,Missing
+EBITDA,2022,NULL,Unclear,Unclear,Missing
+EBITDA,2026,NULL,Unclear,Unclear,Missing
+Gross Profit,2015,NULL,Unclear,Unclear,Missing
+Gross Profit,2020,NULL,Unclear,Unclear,Missing
+Gross Profit,2022,NULL,Unclear,Unclear,Missing
+Gross Profit,2026,NULL,Unclear,Unclear,Missing
+Interest Expense,2015,NULL,Unclear,Unclear,Missing
+Interest Expense,2020,NULL,Unclear,Unclear,Missing
+Interest Expense,2022,NULL,Unclear,Unclear,Missing
+Interest Expense,2026,NULL,Unclear,Unclear,Missing
+Net Income,2015,NULL,Unclear,Unclear,Missing
+Net Income,2020,NULL,Unclear,Unclear,Missing
+Net Income,2022,NULL,Unclear,Unclear,Missing
+Net Income,2026,NULL,Unclear,Unclear,Missing
+Operating Expenses,2015,NULL,Unclear,Unclear,Missing
+Operating Expenses,2020,NULL,Unclear,Unclear,Missing
+Operating Expenses,2022,NULL,Unclear,Unclear,Missing
+Operating Expenses,2026,NULL,Unclear,Unclear,Missing
+Operating Income,2015,NULL,Unclear,Unclear,Missing
+Operating Income,2020,NULL,Unclear,Unclear,Missing
+Operating Income,2022,NULL,Unclear,Unclear,Missing
+Operating Income,2026,NULL,Unclear,Unclear,Missing
+Profit Before Tax,2015,NULL,Unclear,Unclear,Missing
+Profit Before Tax,2020,NULL,Unclear,Unclear,Missing
+Profit Before Tax,2022,NULL,Unclear,Unclear,Missing
+Profit Before Tax,2026,NULL,Unclear,Unclear,Missing
+Research & Development,2015,NULL,Unclear,Unclear,Missing
+Research & Development,2020,NULL,Unclear,Unclear,Missing
+Research & Development,2022,NULL,Unclear,Unclear,Missing
+Research & Development,2026,NULL,Unclear,Unclear,Missing
+Revenue,2015,NULL,Unclear,Unclear,Missing
+Revenue,2020,NULL,Unclear,Unclear,Missing
+Revenue,2022,NULL,Unclear,Unclear,Missing
+Revenue,2026,NULL,Unclear,Unclear,Missing
+Tax Expense,2015,NULL,Unclear,Unclear,Missing
+Tax Expense,2020,NULL,Unclear,Unclear,Missing
+Tax Expense,2022,NULL,Unclear,Unclear,Missing
+Tax Expense,2026,NULL,Unclear,Unclear,Missing
